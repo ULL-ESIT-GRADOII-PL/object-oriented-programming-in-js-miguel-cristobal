@@ -52,6 +52,18 @@
   
   Farenheit.prototype = Object.create(Temperatura.prototype);
   
+  Farenheit.prototype.toCelsius = function() {
+	  var resultado = (this.valor - 32)*5/9;
+	  return resultado;
+  }
+  
+  Farenheit.prototype.toKelvin = function() {
+	  var resultado = (this.valor + 459.67)*5/9;
+	  return resultado;
+  }
+  
+  //FIN DE LAS CLASES.............
+  
   exports.Temperatura = Temperatura;
   exports.Celsius = Celsius;
   exports.Farenheit = Farenheit;
@@ -62,26 +74,34 @@
         /* Extienda la RegeExp a la especificación. use una XRegExp */
         //regexp    = /^\s*([-+]?\d+(?:\.\d+)?(?:e[+-]?\d+)?)\s*([a-z,A-Z]+)\s*$/i;
 		regexp		= XRegExp('^\\s*(?<num> [+-]?\\d+(?:\\.\\d*)?(?:e[+-]?\\d+)?)\\s*  # numero  \n' +
-                          '(?<formato1> [KFC])\\s+  # formato1 (origen) \n' +
-                          '(?<to> to\\s+)?' +
-                          '(?<formato2> [KFC])\\s*$ # formato2 (destino) \n', 'xi'),
+                          '(?<formato1> [KFC])\\s+  # formato1 (origen KFC XD) \n' +
+                          '(?<to> to\\s+)? # Opcionalidad \n' +
+                          '(?<formato2> [KFC])\\s*$ # formato2 (destino KFC XD) \n', 'xi'),
         valor     = valor.match(regexp);
+		console.log("Valor vale: " + valor);
     
     if (valor) {
       var numero = valor[1],
-          tipo   = valor[2].toLowerCase();
+          tipo   = valor[2].toLowerCase(),
+		  destino = valor[4].toLowerCase();
       
       numero = parseFloat(numero);
-      console.log("Valor: " + numero + ", Tipo: " + tipo);
+      console.log("Valor: " + numero + ", Tipo: " + tipo + ", Dest: " + destino);
       
       switch (tipo) {
         case 'c':
           var celsius = new Celsius(numero);
-          elemento.innerHTML = celsius.toFarenheit().toFixed(2) + " Farenheit";
+			if (destino == 'k')
+				elemento.innerHTML = celsius.toKelvin().toFixed(2) + " Kelvin";
+			if (destino == 'f')
+				elemento.innerHTML = celsius.toFarenheit().toFixed(2) + " Farenheit";
           break;
         case 'f':
           var farenheit = new Farenheit(numero);
-          elemento.innerHTML = farenheit.toCelsius().toFixed(2) + " Celsius";
+		  if (destino == 'k')
+			elemento.innerHTML = farenheit.toKelvin().toFixed(2) + " Kelvin";
+		  if (destino == 'c')
+			elemento.innerHTML = farenheit.toCelsius().toFixed(2) + " Celsius";
           break;
 		case 'k':
           var kelvin = new Kelvin(numero);
@@ -90,7 +110,7 @@
         
         default:
           /* rellene este código */
-		  elemento.innerHTML = "El tipo a convertir debe ser Celsius o Farenheit";
+		  elemento.innerHTML = "Error!: El tipo a convertir debe ser KFC";
       }
     }
     else
