@@ -5,16 +5,27 @@
   {
     /* tipo es opcional. Debería admitir  new Medida("45.2 Km") */
     /* ademas de new Medida(45.2, "Km") */
+	this.valor = valor;
+	this.tipo = tipo;
 	
   }
   
   function Temperatura(valor,tipo)
   {
     /* tipo es opcional. Debería admitir new Medida("45.2 F") */
+	Medida.call(this, valor, tipo);
   }
   
   function Celsius(valor)
   {
+  }
+  
+  Celsius.prototype.toFarenheit = function() {
+	  //Pasar de Celsius a Farenheit
+  }
+  
+  Celsius.prototype.toKelvin = function() {
+	  //Pasar de Celsius a Kelvin
   }
   
   function Farenheit(valor)
