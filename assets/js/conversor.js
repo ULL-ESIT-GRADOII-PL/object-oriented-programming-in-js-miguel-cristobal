@@ -85,6 +85,7 @@
   exports.Temperatura = Temperatura;
   exports.Celsius = Celsius;
   exports.Farenheit = Farenheit;
+  exports.Kelvin = Kelvin;
 
   exports.convertir = function() {
     var valor     = document.getElementById('convert').value,
