@@ -5,6 +5,7 @@
   {
     /* tipo es opcional. Debería admitir  new Medida("45.2 Km") */
     /* ademas de new Medida(45.2, "Km") */
+	
   }
   
   function Temperatura(valor,tipo)
@@ -50,6 +51,7 @@
         
         default:
           /* rellene este código */
+		  elemento.innerHTML = "El tipo a convertir debe ser Celsius o Farenheit";
       }
     }
     else
