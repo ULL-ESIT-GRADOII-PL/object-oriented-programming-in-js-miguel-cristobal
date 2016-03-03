@@ -9,6 +9,8 @@
 	this.tipo = tipo;
   }
   
+  //TEMPERATURA*********************************************************
+  
   function Temperatura(valor,tipo)
   {
     /* tipo es opcional. Debería admitir new Medida("45.2 F") */
@@ -19,6 +21,8 @@
   Temperatura.prototype = Object.create(Medida.prototype); //Avoid new
   Temperatura.prototype.constructor = Medida;
   
+  //CELSIUS*************************************************************
+  
   function Celsius(valor)
   {
 	  Temperatura.call(this, valor, 'c');
@@ -27,21 +31,26 @@
   Celsius.prototype = Object.create(Temperatura.prototype); //Heir
   Celsius.prototype.constructor = Temperatura;
   
+  //Pasar de Celsius a Farenheit
   Celsius.prototype.toFarenheit = function() {
-	  //Pasar de Celsius a Farenheit
 	  var resultado = (this.valor*1.8 + 32);
 	  return resultado;
   }
   
+  //Pasar de Celsius a Kelvin
   Celsius.prototype.toKelvin = function() {
-	  //Pasar de Celsius a Kelvin
 	  var resultado = (this.valor + 273.15);
 	  return resultado;
   }
   
+  //FAHRENHEIT****************************************************************
+  
   function Farenheit(valor)
   {
+	  Temperatura.call(this, valor, 'f')
   }
+  
+  Farenheit.prototype = Object.create(Temperatura.prototype);
   
   exports.Temperatura = Temperatura;
   exports.Celsius = Celsius;
@@ -51,8 +60,12 @@
     var valor     = document.getElementById('convert').value,
         elemento  = document.getElementById('converted'),
         /* Extienda la RegeExp a la especificación. use una XRegExp */
-        regexp    = /^\s*([-+]?\d+(?:\.\d+)?(?:e[+-]?\d+)?)\s*([a-z,A-Z]+)\s*$/i;
-    valor     = valor.match(regexp);
+        //regexp    = /^\s*([-+]?\d+(?:\.\d+)?(?:e[+-]?\d+)?)\s*([a-z,A-Z]+)\s*$/i;
+		regexp		= XRegExp('^\\s*(?<num> [+-]?\\d+(?:\\.\\d*)?(?:e[+-]?\\d+)?)\\s*  # numero  \n' +
+                          '(?<formato1> [KFC])\\s+  # formato1 (origen) \n' +
+                          '(?<to> to\\s+)?' +
+                          '(?<formato2> [KFC])\\s*$ # formato2 (destino) \n', 'xi'),
+        valor     = valor.match(regexp);
     
     if (valor) {
       var numero = valor[1],
