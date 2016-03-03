@@ -62,6 +62,24 @@
 	  return resultado;
   }
   
+  //KELVIN***********************************************************************
+  function Kelvin(valor)
+  {
+	  Temperatura.call(this, valor, 'k')
+  }
+  
+  Kelvin.prototype = Object.create(Temperatura.prototype);
+  
+  Kelvin.prototype.toCelsius = function() {
+	  var resultado = (this.valor - 273.15);
+	  return resultado;
+  }
+  
+  Kelvin.prototype.toFarenheit = function() {
+	  var resultado = (this.valor * 9/5)-459.67;
+	  return resultado;
+  }
+  
   //FIN DE LAS CLASES.............
   
   exports.Temperatura = Temperatura;
@@ -73,7 +91,7 @@
         elemento  = document.getElementById('converted'),
         /* Extienda la RegeExp a la especificación. use una XRegExp */
         //regexp    = /^\s*([-+]?\d+(?:\.\d+)?(?:e[+-]?\d+)?)\s*([a-z,A-Z]+)\s*$/i;
-		regexp		= XRegExp('^\\s*(?<num> [+-]?\\d+(?:\\.\\d*)?(?:e[+-]?\\d+)?)\\s*  # numero  \n' +
+		regexp		= XRegExp('^\\s*(?<num> [+-]?\\d+(?:\\.\\d*)?(?:e\\d+)?)\\s*  # numero  \n' +
                           '(?<formato1> [KFC])\\s+  # formato1 (origen KFC XD) \n' +
                           '(?<to> to\\s+)? # Opcionalidad \n' +
                           '(?<formato2> [KFC])\\s*$ # formato2 (destino KFC XD) \n', 'xi'),
@@ -91,6 +109,8 @@
       switch (tipo) {
         case 'c':
           var celsius = new Celsius(numero);
+			if (destino == 'c')
+				elemento.innerHTML = "Ya está en ese formato."
 			if (destino == 'k')
 				elemento.innerHTML = celsius.toKelvin().toFixed(2) + " Kelvin";
 			if (destino == 'f')
@@ -98,6 +118,8 @@
           break;
         case 'f':
           var farenheit = new Farenheit(numero);
+		  if (destino == 'f')
+			elemento.innerHTML = "Ya está en ese formato."
 		  if (destino == 'k')
 			elemento.innerHTML = farenheit.toKelvin().toFixed(2) + " Kelvin";
 		  if (destino == 'c')
@@ -105,7 +127,12 @@
           break;
 		case 'k':
           var kelvin = new Kelvin(numero);
-          elemento.innerHTML = farenheit.toCelsius().toFixed(2) + " Celsius";
+          if (destino == 'k')
+			elemento.innerHTML = "Ya está en ese formato."
+		  if (destino == 'f')
+			elemento.innerHTML = kelvin.toFarenheit().toFixed(2) + " Farenheit";
+		  if (destino == 'c')
+			elemento.innerHTML = kelvin.toCelsius().toFixed(2) + " Celsius";
           break;
         
         default:
