@@ -91,7 +91,7 @@
         elemento  = document.getElementById('converted'),
         /* Extienda la RegeExp a la especificación. use una XRegExp */
         //regexp    = /^\s*([-+]?\d+(?:\.\d+)?(?:e[+-]?\d+)?)\s*([a-z,A-Z]+)\s*$/i;
-		regexp		= XRegExp('^\\s*(?<num> [+-]?\\d+(?:\\.\\d*)?(?:e[+-]?\\d+)?)\\s*  # numero  \n' +
+	regexp	= XRegExp('^\\s*(?<num> [+-]?\\d+(?:\\.\\d*)?(?:e[+-]?\\d+)?)\\s*  # numero  \n' +
                           '(?<formato1> [KFC])\\s+  # formato1 (origen KFC XD) \n' +
                           '(?<to> to\\s+)? # Opcionalidad \n' +
                           '(?<formato2> [KFC])\\s*$ # formato2 (destino KFC XD) \n', 'xi'),
